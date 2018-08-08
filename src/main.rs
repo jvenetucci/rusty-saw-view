@@ -78,22 +78,23 @@ struct Person {
 use std::fs;
 
 fn read_user_from_file() -> () {
-    // Open the file in read-only mode.
     let file = fs::read_to_string("example-blockchain/blocks.json");
 
-    // Read the JSON contents of the file as an instance of `User`.
+    // Read JSON from file and store as a BlockData structure.
     let u: BlockData = serde_json::from_str(file.unwrap().as_str()).unwrap();
 
     println!("There are {} blocks.", u.data.len());
 
+    // Print out the blocks, the first 6 characters of their ID, and any transaction data available
     for i in u.data.iter() {
-        println!("Block {} - {}", i.header.block_num, i.header_signature);
+        println!("Block {} - {}", i.header.block_num, &i.header_signature[0..6]);
+        for j in i.batches.iter() {
+            for k in j.transactions.iter() {
+                println!("\tData: {}", k.payload);
+
+            }
+        }
     }
-
-    // println!("{}", u.data.len())
-
-    // Return the `User`.
-    // Ok(u)
 }
 
 fn main() {
