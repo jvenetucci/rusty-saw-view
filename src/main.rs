@@ -3,6 +3,9 @@ extern crate serde_derive;
 
 extern crate serde;
 extern crate serde_json;
+extern crate serde_cbor;
+
+extern crate base64;
 
 #[derive(Deserialize, Debug)]
 struct BlockData {
@@ -81,19 +84,29 @@ fn read_user_from_file() -> () {
     let file = fs::read_to_string("example-blockchain/blocks.json");
 
     // Read JSON from file and store as a BlockData structure.
-    let u: BlockData = serde_json::from_str(file.unwrap().as_str()).unwrap();
+    let json_data: BlockData = serde_json::from_str(file.unwrap().as_str()).unwrap();
 
-    println!("There are {} blocks.", u.data.len());
+    println!("There are {} blocks.", json_data.data.len());
 
     // Print out the blocks, the first 6 characters of their ID, and any transaction data available
-    for i in u.data.iter() {
-        println!("Block {} - {}", i.header.block_num, &i.header_signature[0..6]);
-        for j in i.batches.iter() {
-            for k in j.transactions.iter() {
-                println!("\tData: {}", k.payload);
-
+    for block in json_data.data.iter() {
+        println!("Block {} - {}", block.header.block_num, &block.header_signature[0..6]);
+        if block.header.block_num != "0" { //Skip the genesis/settings block
+            for batch in block.batches.iter() {
+                for txn in batch.transactions.iter() {
+                    // println!("\tData as Base64: {:x?}", txn.payload.as_str());
+                    let bytes = base64::decode(txn.payload.as_str()).unwrap();
+                    // println!("\tData as Byte Array: {:x?}", bytes);
+                    let va: serde_cbor::Value = serde_cbor::from_slice(&bytes).unwrap();
+                    let pq = va.as_object().unwrap();
+                    for key in pq.keys() {
+                        println!("\t\t{:?} : {:?}", key, pq[key]);
+                    }
+                    println!("\t{:?}", va);
+                }
             }
         }
+        
     }
 }
 
