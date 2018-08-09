@@ -95,14 +95,16 @@ fn read_user_from_file() -> () {
             for batch in block.batches.iter() {
                 for txn in batch.transactions.iter() {
                     // println!("\tData as Base64: {:x?}", txn.payload.as_str());
+
                     let bytes = base64::decode(txn.payload.as_str()).unwrap();
                     // println!("\tData as Byte Array: {:x?}", bytes);
+
                     let va: serde_cbor::Value = serde_cbor::from_slice(&bytes).unwrap();
                     let pq = va.as_object().unwrap();
-                    for key in pq.keys() {
-                        println!("\t\t{:?} : {:?}", key, pq[key]);
+
+                    for (key, val) in pq.iter() {
+                        println!("\t\t{:?} : {:?}", key, val);
                     }
-                    println!("\t{:?}", va);
                 }
             }
         }
