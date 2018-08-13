@@ -38,4 +38,11 @@ mod test_read_from_file {
         let path = "example-blockchain/malformatted_block_data.json";
         read_block_data_from_file(path);
     }
+
+    #[test]
+    #[should_panic(expected = "Error in parsing block data file:")]
+    fn valid_path_but_wrong_file() {
+        let path = "example-blockchain/state.json";
+        read_block_data_from_file(path);
+    }
 }
