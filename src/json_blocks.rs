@@ -1,3 +1,5 @@
+use colored::*; 
+
 #[derive(Deserialize, Debug, Default)]
 pub struct BlockData {
     data: Vec<Block>,
@@ -10,6 +12,40 @@ impl BlockData {
     pub fn get_num_blocks(&self) -> usize {
         self.data.len()
     }
+
+    pub fn display_full_data(&self, (full_id, show_genesis): (bool, bool)) {
+        // Print out the blocks
+        for block in self.data.iter() {
+            // Only print out the first block if full_id is true
+            if show_genesis || block.header.block_num != "0" {
+                println!("{}{}", "Block ".green().bold().on_black(), block.header.block_num.green().bold().on_black());
+                if full_id {
+                    println!("  ID: {}", block.header_signature.magenta());
+                    println!("  Signer Pub Key: {}", block.header.signer_public_key);
+                } else {
+                    println!("  ID: {}...{}", &block.header_signature[0..6].magenta(), &block.header_signature[0..4].magenta());
+                    println!("  Signer Pub Key: {}..{}", &block.header.signer_public_key[0..6], &block.header.signer_public_key[0..4]);
+                }
+
+            }
+        //     if block.header.block_num != "0" { //Skip the genesis/settings block
+        //         for batch in block.batches.iter() {
+        //             for txn in batch.transactions.iter() {
+        //                 // println!("\tData as Base64: {:x?}", txn.payload.as_str());
+
+        //                 let bytes = base64::decode(txn.payload.as_str()).unwrap();
+        //                 // println!("\tData as Byte Array: {:x?}", bytes);
+
+        //                 let va: serde_cbor::Value = serde_cbor::from_slice(&bytes).unwrap();
+        //                 let pq = va.as_object().unwrap();
+
+        //                 for (key, val) in pq.iter() {
+        //                     println!("\t\t{:?} : {:?}", key, val);
+        //                 }
+        //             }
+        //         }
+            }
+        }
 }
 
 #[cfg(test)]
