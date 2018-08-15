@@ -28,8 +28,12 @@ impl BlockData {
 
     /// 
     pub fn display_full_data(&self, (full_id, show_genesis, method): (bool, bool, String)) {
+        
+        // Figure out when to stop displaying arrows.
+        let last_block_num = match show_genesis { true => "0", false => "1"};
+
         for block in self.data.iter() {
-            // Only print out the first block if full_id is true
+            // Only print out the first block if show_genesis is true
             if show_genesis || block.header.block_num != "0" {
                 println!("{}{}{}", "|Block ".green().bold().on_black(), block.header.block_num.green().bold().on_black(), " ".on_black());
                 if full_id {
@@ -37,6 +41,8 @@ impl BlockData {
                     println!("| Previous Block ID: {}", block.header.previous_block_id.magenta());
                     println!("| Signer Pub Key: {}", block.header.signer_public_key);
                 } else {
+                    // If not full_id, only print out the first 6, and last 4 characters
+                    // Ok to do this since the following are always expected to be byte strings
                     println!("| ID: {}...{}", &block.header_signature[0..6].magenta(), &block.header_signature[(block.header_signature.len() - 4)..].magenta());
                     println!("| Previous Block ID: {}...{}", &block.header.previous_block_id[0..6].magenta(), &block.header.previous_block_id[(block.header.previous_block_id.len() - 4)..].magenta());
                     println!("| Signer Pub Key: {}...{}", &block.header.signer_public_key[0..6], &block.header.signer_public_key[(block.header.signer_public_key.len() - 4)..]);
@@ -72,6 +78,7 @@ impl BlockData {
                             println!("\t\t| Signer Pub Key: {}...{}", &txn.header.signer_public_key[0..6], &txn.header.signer_public_key[(txn.header.signer_public_key.len() - 4)..]);
                         }
 
+                        // Deserialize the payload according to the passed in method
                         let payload_encoded = String::from(txn.payload.as_ref());
                         match method.as_str() {
                             "cbor" => println!("\t\t| Payload:\n{}", parse_cbor(payload_encoded, 3).blue()),
@@ -79,7 +86,8 @@ impl BlockData {
                         }
                     }
                 }
-                println!("{}", "\t\t| |\n\t\t| |\n\t\t\\ /\n\t\t V \n".green());
+                // Display an arrow until we get to the last block
+                if block.header.block_num != last_block_num {println!("{}", "\t\t| |\n\t\t| |\n\t\t\\ /\n\t\t V \n".green());}
             }
         }
     }
