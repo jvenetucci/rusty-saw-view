@@ -1,5 +1,15 @@
+// Joseph Venetucci
+
+
+//! # json_blocks
+//!
+//! `json_blocks` is a collection of structures that represent the JSON structures one will find
+//! by requesting data from the `/blocks` endpoint of Hyperledger Sawtooth. Also contained here are 
+//! methods for retrieving useful information and displaying these structures.
+
 use colored::*; 
 
+/// A structure that represents the root data item found at the /blocks endpoint.
 #[derive(Deserialize, Debug, Default)]
 pub struct BlockData {
     data: Vec<Block>,
@@ -9,12 +19,14 @@ pub struct BlockData {
 }
 
 impl BlockData {
+
+    /// Returns the number of blocks contained.
     pub fn get_num_blocks(&self) -> usize {
         self.data.len()
     }
 
+    /// 
     pub fn display_full_data(&self, (full_id, show_genesis): (bool, bool)) {
-        // Print out the blocks
         for block in self.data.iter() {
             // Only print out the first block if full_id is true
             if show_genesis || block.header.block_num != "0" {
@@ -69,6 +81,84 @@ impl BlockData {
     }
 }
 
+/// A structure that represents a Block. Blocks contain metadata and a list of [Batches](struct.Batch.html). 
+#[derive(Deserialize, Debug, Default)]
+pub struct Block {
+    batches: Vec<Batch>,
+    header: BlockHeader,
+    header_signature: String
+}
+
+impl Block {
+    /// Returns the number of batches contained.
+    pub fn get_num_batches(&self) -> usize {
+        self.batches.len()
+    }
+}
+
+/// A structure that represents the metadata of a [Block](struct.Block.html). 
+#[derive(Deserialize, Debug, Default)]
+pub struct BlockHeader {
+    batch_ids: Vec<String>,
+    block_num: String,
+    consensus: String,
+    previous_block_id: String,
+    signer_public_key: String,
+    state_root_hash: String
+}
+
+/// A structure that represents a Batch. Batches contain metadata and a list of [Transactions](struct.Transaction.html). 
+#[derive(Deserialize, Debug, Default)]
+pub struct Batch {
+    header: BatchHeader,
+    header_signature: String,
+    trace: bool,
+    transactions: Vec<Transaction>,
+}
+
+impl Batch {
+    /// Returns the number of transactions contained.
+    pub fn get_num_txns(&self) -> usize {
+        self.transactions.len()
+    }
+}
+
+/// A structure that represents the metadata of a [Batch](struct.Batch.html). 
+#[derive(Deserialize, Debug, Default)]
+pub struct BatchHeader {
+    signer_public_key: String,
+    transaction_ids: Vec<String>
+}
+
+/// A structure that represents a Transaction. Transactions contain metadata and a serialized payload encoded in Base64. 
+#[derive(Deserialize, Debug, Default)]
+pub struct Transaction {
+    header: TransactionHeader,
+    header_signature: String,
+    payload: String
+}
+
+/// A structure that represents the metadata of a [Transaction](struct.Transaction.html). 
+#[derive(Deserialize, Debug, Default)]
+pub struct TransactionHeader {
+    batcher_public_key: String,
+    dependencies: Vec<String>,
+    family_name: String,
+    family_version: String,
+    inputs: Vec<String>,
+    nonce: String,
+    outputs: Vec<String>,
+    payload_sha512: String,
+    signer_public_key: String
+}
+
+/// A structure that represents the paging element found at the /blocks endpoint. Only useful if the requester asked for paging.
+#[derive(Deserialize, Debug, Default)]
+pub struct Paging {
+    limit: Option<String>,
+    start: Option<String>,
+}
+
 #[cfg(test)]
 mod test_blockdata_struct {
     use super::*;
@@ -95,19 +185,7 @@ mod test_blockdata_struct {
     }
 }
 
-#[derive(Deserialize, Debug, Default)]
-pub struct Block {
-    batches: Vec<Batch>,
-    header: BlockHeader,
-    header_signature: String
-}
-
-impl Block {
-    pub fn get_num_batches(&self) -> usize {
-        self.batches.len()
-    }
-}
-
+/// Tests for the block
 #[cfg(test)]
 mod test_block_struct {
     use super::*;
@@ -131,30 +209,6 @@ mod test_block_struct {
         data.batches.push(Batch::default());
         data.batches.push(Batch::default());
         assert_eq!(2, data.get_num_batches());
-    }
-}
-
-#[derive(Deserialize, Debug, Default)]
-pub struct BlockHeader {
-    batch_ids: Vec<String>,
-    block_num: String,
-    consensus: String,
-    previous_block_id: String,
-    signer_public_key: String,
-    state_root_hash: String
-}
-
-#[derive(Deserialize, Debug, Default)]
-pub struct Batch {
-    header: BatchHeader,
-    header_signature: String,
-    trace: bool,
-    transactions: Vec<Transaction>,
-}
-
-impl Batch {
-    pub fn get_num_txns(&self) -> usize {
-        self.transactions.len()
     }
 }
 
@@ -182,36 +236,4 @@ mod test_batch_struct {
         data.transactions.push(Transaction::default());
         assert_eq!(2, data.get_num_txns());
     }
-}
-
-#[derive(Deserialize, Debug, Default)]
-pub struct BatchHeader {
-    signer_public_key: String,
-    transaction_ids: Vec<String>
-}
-
-#[derive(Deserialize, Debug, Default)]
-pub struct Transaction {
-    header: TransactionHeader,
-    header_signature: String,
-    payload: String
-}
-
-#[derive(Deserialize, Debug, Default)]
-pub struct Paging {
-    limit: Option<String>,
-    start: Option<String>,
-}
-
-#[derive(Deserialize, Debug, Default)]
-pub struct TransactionHeader {
-    batcher_public_key: String,
-    dependencies: Vec<String>,
-    family_name: String,
-    family_version: String,
-    inputs: Vec<String>,
-    nonce: String,
-    outputs: Vec<String>,
-    payload_sha512: String,
-    signer_public_key: String
 }
