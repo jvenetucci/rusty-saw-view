@@ -37,9 +37,9 @@ impl BlockData {
                     println!("| Previous Block ID: {}", block.header.previous_block_id.magenta());
                     println!("| Signer Pub Key: {}", block.header.signer_public_key);
                 } else {
-                    println!("| ID: {}...{}", &block.header_signature[0..6].magenta(), &block.header_signature[0..4].magenta());
-                    println!("| Previous Block ID: {}...{}", &block.header.previous_block_id[0..6].magenta(), &block.header.previous_block_id[0..4].magenta());
-                    println!("| Signer Pub Key: {}...{}", &block.header.signer_public_key[0..6], &block.header.signer_public_key[0..4]);
+                    println!("| ID: {}...{}", &block.header_signature[0..6].magenta(), &block.header_signature[(block.header_signature.len() - 4)..].magenta());
+                    println!("| Previous Block ID: {}...{}", &block.header.previous_block_id[0..6].magenta(), &block.header.previous_block_id[(block.header.previous_block_id.len() - 4)..].magenta());
+                    println!("| Signer Pub Key: {}...{}", &block.header.signer_public_key[0..6], &block.header.signer_public_key[(block.header.signer_public_key.len() - 4)..]);
                 }
 
                 match block.get_num_batches() {
@@ -53,8 +53,8 @@ impl BlockData {
                         println!("\t| ID: {}", batch.header_signature);
                         println!("\t| Signer Pub Key: {}", batch.header.signer_public_key);
                     } else {
-                        println!("\t| ID: {}...{}", &batch.header_signature[0..6], &batch.header_signature[0..4]);
-                        println!("\t| Signer Pub Key: {}...{}", &batch.header.signer_public_key[0..6], &batch.header.signer_public_key[0..4]);
+                        println!("\t| ID: {}...{}", &batch.header_signature[0..6], &batch.header_signature[(batch.header_signature.len() - 4)..]);
+                        println!("\t| Signer Pub Key: {}...{}", &batch.header.signer_public_key[0..6], &batch.header.signer_public_key[(batch.header.signer_public_key.len() - 4)..]);
                     }
 
                     match batch.get_num_txns() {
@@ -68,8 +68,8 @@ impl BlockData {
                             println!("\t\t| ID: {}", txn.header_signature);
                             println!("\t\t| Signer Pub Key: {}", txn.header.signer_public_key);
                         } else {
-                            println!("\t\t| ID: {}...{}", &txn.header_signature[0..6], &txn.header_signature[0..4]);
-                            println!("\t\t| Signer Pub Key: {}...{}", &txn.header.signer_public_key[0..6], &txn.header.signer_public_key[0..4]);
+                            println!("\t\t| ID: {}...{}", &txn.header_signature[0..6], &txn.header_signature[(txn.header_signature.len() - 4)..]);
+                            println!("\t\t| Signer Pub Key: {}...{}", &txn.header.signer_public_key[0..6], &txn.header.signer_public_key[(txn.header.signer_public_key.len() - 4)..]);
                         }
 
                         let payload_encoded = String::from(txn.payload.as_ref());
