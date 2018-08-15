@@ -1,7 +1,7 @@
 extern crate serde_json;
 
-use json_blocks::{BlockData};
-use json_state::{StateData};
+use json_structs::json_blocks::{BlockData};
+use json_structs::json_state::{StateData};
 
 use std::fs;
 

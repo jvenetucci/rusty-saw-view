@@ -7,7 +7,7 @@
 //! by requesting data from the `/state` endpoint of Hyperledger Sawtooth. Also contained here are 
 //! methods for retrieving useful information and displaying these structures.
 
-use json_blocks::{Paging};
+use super::json_blocks::{Paging};
 use json_deserialize::*;
 use colored::*;
 

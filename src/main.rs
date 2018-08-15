@@ -4,13 +4,12 @@ extern crate serde_derive;
 extern crate serde;
 extern crate colored;
 
-pub mod json_blocks;
-pub mod json_state;
+pub mod json_structs;
 pub mod json_reader;
 pub mod json_deserialize;
 
-use json_blocks::{BlockData};
-use json_state::{StateData};
+use json_structs::json_blocks::{BlockData};
+use json_structs::json_state::{StateData};
 use json_reader::{read_block_data_from_file, read_state_data_from_file};
 
 fn main() {
