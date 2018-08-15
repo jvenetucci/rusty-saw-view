@@ -7,7 +7,8 @@
 //! by requesting data from the `/blocks` endpoint of Hyperledger Sawtooth. Also contained here are 
 //! methods for retrieving useful information and displaying these structures.
 
-use colored::*; 
+use colored::*;
+use json_deserialize::*;
 
 /// A structure that represents the root data item found at the /blocks endpoint.
 #[derive(Deserialize, Debug, Default)]
@@ -26,7 +27,7 @@ impl BlockData {
     }
 
     /// 
-    pub fn display_full_data(&self, (full_id, show_genesis): (bool, bool)) {
+    pub fn display_full_data(&self, (full_id, show_genesis, method): (bool, bool, String)) {
         for block in self.data.iter() {
             // Only print out the first block if full_id is true
             if show_genesis || block.header.block_num != "0" {
@@ -71,11 +72,14 @@ impl BlockData {
                             println!("\t\t| Signer Pub Key: {}...{}", &txn.header.signer_public_key[0..6], &txn.header.signer_public_key[0..4]);
                         }
 
-                        println!("\t\t|\tData: {}", txn.payload.blue());
-
+                        let payload_encoded = String::from(txn.payload.as_ref());
+                        match method.as_str() {
+                            "cbor" => println!("\t\t| Payload:\n{}", parse_cbor(payload_encoded, 3).blue()),
+                            _ => panic!("Unsupported deserialization method: {}", method)
+                        }
                     }
                 }
-                println!("{}", "\n\t\t| |\n\t\t| |\n\t\t\\ /\n\t\t V \n".green());
+                println!("{}", "\t\t| |\n\t\t| |\n\t\t\\ /\n\t\t V \n".green());
             }
         }
     }

@@ -2,9 +2,6 @@
 extern crate serde_derive;
 
 extern crate serde;
-extern crate serde_cbor;
-
-extern crate base64;
 
 extern crate colored;
 
@@ -12,6 +9,7 @@ use colored::*;
 
 pub mod json_blocks;
 pub mod json_reader;
+pub mod json_deserialize;
 
 use json_blocks::{BlockData};
 use json_reader::{read_block_data_from_file};
@@ -51,6 +49,5 @@ use json_reader::{read_block_data_from_file};
 fn main() {
     let data: BlockData = read_block_data_from_file("example-blockchain/blocks.json");
     println!("Length: {}", data.get_num_blocks());
-    println!("{}", "This is some green text".green().bold());
-    data.display_full_data((false, false));
+    data.display_full_data((false, false, String::from("cbor")));
 }
