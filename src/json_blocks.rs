@@ -3,7 +3,7 @@
 
 //! # json_blocks
 //!
-//! `json_blocks` is a collection of structures that represent the JSON structures one will find
+//! `json_blocks` is a collection of structures that represent the JSON structure one will find
 //! by requesting data from the `/blocks` endpoint of Hyperledger Sawtooth. Also contained here are 
 //! methods for retrieving useful information and displaying these structures.
 
