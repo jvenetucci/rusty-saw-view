@@ -9,6 +9,7 @@
 
 use super::json_blocks::{Paging};
 use json_deserialize::*;
+use super::{get_partial_string};
 use colored::*;
 
 /// A structure that represents the root data item found at the /state endpoint.
@@ -33,7 +34,7 @@ impl StateData {
                 if full_id {
                     println!("{} {}", "State Address:".green().on_black(), state.get_address_full());
                 } else {
-                    println!("{} {}", "State Address:".green().on_black(), state.get_address_partial());
+                    println!("{} {}", "State Address:".green().on_black(), get_partial_string(state.get_address_full(), 6, 4));
                 }
 
                 let payload_encoded = String::from(state.data.as_str());
@@ -67,12 +68,6 @@ impl State {
     /// Returns the full address
     pub fn get_address_full(&self) -> String {
         String::from(&self.address[0..])
-    }
-
-    /// Returns a string of the first 6 and last 4 characters of the address
-    pub fn get_address_partial(&self) -> String {
-        format!("{}...{}", String::from(&self.address[0..6]),
-            String::from(&self.address[(self.address.len() - 4)..]))
     }
 }
 
@@ -126,20 +121,5 @@ mod test_state_struct {
         let mut data = State::default();
         data.address = String::from("123ABC");
         data.get_address_namespace();
-    }
-
-    #[test]
-    fn full_address_is_returned() {
-        let mut data = State::default();
-        data.address = String::from("1cf126e83dbe4cdd233ab6402f1c19b0d93543f5da490356beab9c53435eef849dfcab");
-        assert_eq!(String::from("1cf126e83dbe4cdd233ab6402f1c19b0d93543f5da490356beab9c53435eef849dfcab"),
-            data.get_address_full());
-    }
-
-    #[test]
-    fn partial_address_is_returned() {
-        let mut data = State::default();
-        data.address = String::from("1cf126e83dbe4cdd233ab6402f1c19b0d93543f5da490356beab9c53435eef849dfcab");
-        assert_eq!(String::from("1cf126...fcab"), data.get_address_partial());
     }
 }
