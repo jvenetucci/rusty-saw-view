@@ -6,6 +6,7 @@
 
 extern crate serde_json;
 extern crate reqwest;
+extern crate mockito;
 
 use json_structs::json_blocks::{BlockData};
 use json_structs::json_state::{StateData};
@@ -54,7 +55,7 @@ pub fn read_block_data_from_endpoint(url: &str) -> BlockData {
     } else if response.status().is_server_error() || response.status().is_client_error(){
         panic!("Error code {} when trying to get /blocks endpoint: ", response.status().as_u16());
     } else {
-        panic!("Unknown code {} when trying to get /blocks endpoint: ", response.status().as_u16());
+        panic!("Unexpected code {} when trying to get /blocks endpoint: ", response.status().as_u16());
     }
 }
 
@@ -67,12 +68,12 @@ pub fn read_block_data_from_endpoint(url: &str) -> BlockData {
 pub fn read_state_data_from_endpoint(url: &str) -> StateData {
     let mut response = reqwest::get(url).expect("Error in trying to make GET Request to server: ");
     if response.status().is_success() {
-        let data: StateData = response.json().expect("Error in parsing block JSON: ");
+        let data: StateData = response.json().expect("Error in parsing state JSON: ");
         data
     } else if response.status().is_server_error() || response.status().is_client_error(){
         panic!("Error code {} when trying to get /state endpoint: ", response.status().as_u16());
     } else {
-        panic!("Bad code {} when trying to get /state endpoint: ", response.status().as_u16());
+        panic!("Unexpected code {} when trying to get /state endpoint: ", response.status().as_u16());
     }
 }
 
@@ -132,5 +133,147 @@ mod test_read_from_file {
     fn statedata_valid_path_but_wrong_file() {
         let path = "example-blockchain/blocks.json";
         read_state_data_from_file(path);
+    }
+}
+
+#[cfg(test)]
+mod test_read_from_endpoint {
+    use super::*;
+    use self::mockito::mock;
+
+    const URL: &'static str = mockito::SERVER_URL;
+
+    #[test]
+    #[should_panic(expected = "Error code 404")]
+    fn blockdata_error_404() {
+        let _m = mock("GET", "/")
+            .with_status(404)
+            .with_header("content-type", "application/json")
+            .with_body("")
+            .create();
+
+        read_block_data_from_endpoint(URL);
+    }
+
+    #[test]
+    #[should_panic(expected = "Unexpected code 301")]
+    fn blockdata_unknown_301() {
+        let _m = mock("GET", "/")
+            .with_status(301)
+            .with_header("content-type", "application/json")
+            .with_body("")
+            .create();
+
+        read_block_data_from_endpoint(URL);
+    }
+
+    #[test]
+    #[should_panic(expected = "Error code 501")]
+    fn blockdata_error_501() {
+        let _m = mock("GET", "/")
+            .with_status(501)
+            .with_header("content-type", "application/json")
+            .with_body("")
+            .create();
+
+        read_block_data_from_endpoint(URL);
+    }
+
+    #[test]
+    #[should_panic(expected = "Error in parsing block JSON:")]
+    fn blockdata_code_200_bad_json() {
+        let _m = mock("GET", "/")
+            .with_status(200)
+            .with_header("content-type", "application/json")
+            .with_body("{hello:world}")
+            .create();
+
+        read_block_data_from_endpoint(URL);
+    }
+
+    #[test]
+    fn blockdata_code_200_good_json() {
+        let _m = mock("GET", "/")
+            .with_status(200)
+            .with_header("content-type", "application/json")
+            .with_body("{
+                \"data\": [],
+                \"head\": \"\",
+                \"link\": \"\",
+                \"paging\": {
+                    \"limit\": null,
+                    \"start\": null
+                }
+            }")
+            .create();
+
+        read_block_data_from_endpoint(URL);
+    }
+
+    #[test]
+    #[should_panic(expected = "Error code 404")]
+    fn statedata_error_404() {
+        let _m = mock("GET", "/")
+            .with_status(404)
+            .with_header("content-type", "application/json")
+            .with_body("")
+            .create();
+
+        read_state_data_from_endpoint(URL);
+    }
+
+    #[test]
+    #[should_panic(expected = "Unexpected code 301")]
+    fn statedata_unknown_301() {
+        let _m = mock("GET", "/")
+            .with_status(301)
+            .with_header("content-type", "application/json")
+            .with_body("")
+            .create();
+
+        read_state_data_from_endpoint(URL);
+    }
+
+    #[test]
+    #[should_panic(expected = "Error code 501")]
+    fn statedata_error_501() {
+        let _m = mock("GET", "/")
+            .with_status(501)
+            .with_header("content-type", "application/json")
+            .with_body("")
+            .create();
+
+        read_state_data_from_endpoint(URL);
+    }
+
+    #[test]
+    #[should_panic(expected = "Error in parsing state JSON:")]
+    fn statedata_code_200_bad_json() {
+        let _m = mock("GET", "/")
+            .with_status(200)
+            .with_header("content-type", "application/json")
+            .with_body("{hello:world}")
+            .create();
+
+        read_state_data_from_endpoint(URL);
+    }
+
+    #[test]
+    fn statedata_code_200_good_json() {
+        let _m = mock("GET", "/")
+            .with_status(200)
+            .with_header("content-type", "application/json")
+            .with_body("{
+                \"data\": [],
+                \"head\": \"\",
+                \"link\": \"\",
+                \"paging\": {
+                    \"limit\": null,
+                    \"start\": null
+                }
+            }")
+            .create();
+
+        read_state_data_from_endpoint(URL);
     }
 }
