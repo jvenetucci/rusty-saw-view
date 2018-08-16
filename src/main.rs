@@ -1,6 +1,48 @@
-//! This is documentation for the `rusty-saw-view` crate.
+//! `rusty-saw-view` is a Rust program that helps visualize blockchain data from 
+//! [Hyperledger Sawtooth](https://www.hyperledger.org/projects/sawtooth). Sawtooth is a blockchain framework that 
+//! provides a REST API to query information such as the current state of the ledger, individual blocks and
+//! transaction, and the entire blockchain itself. Requesting this information from the respective HTTP endpoints returns a 
+//! JSON formatted block of data. 
 //! 
-//! ## Supported Deserialization Schemes
+//! From my own experience, Sawtooth is great for including a blockchain based distributed ledger into an application. However 
+//! I learned that explaining how transactions were being made and how the blockchain worked was difficult with people who were 
+//! unfamiliar with the concept of a blockchain. For transactions and blockchains that were simple I could easily draw it on a 
+//! whiteboard to help explain it. As the transactions and application got more complex, so did the difficulty in explaining what 
+//! was going on. Showing the JSON data wasn't really to helpful because (1) the data in each block is serialized and encoded (2) 
+//! and while it's in human readable JSON format, it's hard to connect each block/transaction to each other when it's just one 
+//! stream of text.
+//! 
+//! `rusty-saw-view` attempts to solve this problem by contacting the HTTP endpoints of a Sawtooth node and requesting the JSON data. 
+//! It's job is to parse and visually display this data in a way thats easy to understand and explain.
+//! 
+//! ## Usage
+//! Running the command `cargo run -- -help` will display the folowing:
+//! ```bash
+//! USAGE:
+//!     rusty-saw-view [FLAGS] <endpoint> <method> <source> <location>
+//! 
+//! FLAGS:
+//!     -f, --full-addr    Prints out full addresses & PubKeys
+//!     -g, --genesis      Prints out the settings state or genesis block depending on the context
+//!     -h, --help         Prints help information
+//!     -n, --no-color     Prints without colored text. Use for piping to file
+//!     -V, --version      Prints version information
+//! ARGS:
+//!     <endpoint>    From which endpoint is the data coming from? [possible values: state, blocks]
+//!     <method>      What deserialization method to use? [possible values: cbor, json, custom]
+//!     <source>      Where is the data coming from? [possible values: file, url]
+//!     <location>    File path, or URL to data
+//! ```
+//! 
+//! ## Supported Deserialization Methods
+//! Out of the box the following deserialization methods are supported:
+//! - CBOR
+//! - JSON
+//! 
+//! If you want to use a custom method or one not supported see the [parse_custom()](json_deserialize/fn.parse_custom.html) method
+//! 
+//! ## Additional Info
+//! For details on how to use this crate, see the README located at the projects [Github page](https://github.com/jvenetucci/rusty-saw-view)
 
 #[macro_use]
 extern crate serde_derive;
