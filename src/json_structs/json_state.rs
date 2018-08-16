@@ -61,6 +61,7 @@ impl StateData {
                 } else {
                     match method.as_str() {
                     "cbor" => println!("\tData:\n{}", parse_cbor(payload_encoded, 2).blue()),
+                    "json" => println!("\tData:\n{}", parse_json(payload_encoded, 2).blue()),
                     _ => panic!("Unsupported deserialization method: {}", method)
                     }
                 }
@@ -98,6 +99,7 @@ impl StateData {
                 } else {
                     match method.as_str() {
                     "cbor" => println!("\tData:\n{}", parse_cbor(payload_encoded, 2)),
+                    "json" => println!("\tData:\n{}", parse_json(payload_encoded, 2)),
                     _ => panic!("Unsupported deserialization method: {}", method)
                     }
                 }

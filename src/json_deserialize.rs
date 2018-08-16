@@ -68,8 +68,6 @@ pub fn parse_json(payload_in_base64: String, tab_padding: u8) -> String {
     decoded_payload
 }
 
-
-
 #[cfg(test)]
 mod test_cbor_decode {
     use super::*;

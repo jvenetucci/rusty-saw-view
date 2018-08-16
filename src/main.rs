@@ -28,9 +28,9 @@ enum DataTypes {
 }
 
 fn main() {
-    let endpoints = ["state", "blocks"];
-    let methods = ["cbor",];
-    let sources = ["file", "url"];
+    let endpoints = ["state", "blocks",];
+    let methods = ["cbor", "json",];
+    let sources = ["file", "url",];
 
     // CLI clap configuration
     let matches = App::new("rusty-saw-view")

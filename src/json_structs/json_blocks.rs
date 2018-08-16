@@ -102,6 +102,7 @@ impl BlockData {
                         } else {
                             match method.as_str() {
                                 "cbor" => println!("\t\t| Payload:\n{}", parse_cbor(payload_encoded, 3).blue()),
+                                "json" => println!("\t\t| Payload:\n{}", parse_json(payload_encoded, 3).blue()),
                                 _ => panic!("Unsupported deserialization method: {}", method)
                             }
                         }
@@ -186,6 +187,7 @@ impl BlockData {
                         } else {
                             match method.as_str() {
                                 "cbor" => println!("\t\t| Payload:\n{}", parse_cbor(payload_encoded, 3)),
+                                "json" => println!("\t\t| Payload:\n{}", parse_json(payload_encoded, 3)),
                                 _ => panic!("Unsupported deserialization method: {}", method)
                             }
                         } 
