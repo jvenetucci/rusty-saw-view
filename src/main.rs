@@ -29,7 +29,7 @@ enum DataTypes {
 
 fn main() {
     let endpoints = ["state", "blocks",];
-    let methods = ["cbor", "json",];
+    let methods = ["cbor", "json", "custom",];
     let sources = ["file", "url",];
 
     // CLI clap configuration
