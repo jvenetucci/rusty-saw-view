@@ -41,7 +41,7 @@ impl BlockData {
     /// - `show_genesis` -> Setting this to false will omit the genesis block that sets blockchain setting data. It is
     ///     recommended that this stay false as its serialization will often be different from the rest of the data.
     /// - `method` -> What method to use when deserializing data. See
-    ///     [supported methods](../../index.html#supported-deserialization-schemes) for a list of valid options.
+    ///     [supported methods](../../index.html#supported-deserialization-methods) for a list of valid options.
     pub fn display_full_data(&self, (full_id, show_genesis, method): (bool, bool, String)) {
         
         // Figure out when to stop displaying arrows.
@@ -127,7 +127,7 @@ impl BlockData {
     /// - `show_genesis` -> Setting this to false will omit the genesis block that sets blockchain setting data. It is
     ///     recommended that this stay false as its serialization will often be different from the rest of the data.
     /// - `method` -> What method to use when deserializing data. See
-    ///     [supported methods](../../index.html#supported-deserialization-schemes) for a list of valid options.
+    ///     [supported methods](../../index.html#supported-deserialization-methods) for a list of valid options.
     pub fn display_full_data_no_color(&self, (full_id, show_genesis, method): (bool, bool, String)) {
         
         // Figure out when to stop displaying arrows.

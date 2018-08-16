@@ -43,6 +43,10 @@
 //! 
 //! ## Additional Info
 //! For details on how to use this crate, see the README located at the projects [Github page](https://github.com/jvenetucci/rusty-saw-view)
+//! 
+//! Contact the author:
+//! 
+//! Joseph Venetucci <venetuc@pdx.edu>
 
 #[macro_use]
 extern crate serde_derive;

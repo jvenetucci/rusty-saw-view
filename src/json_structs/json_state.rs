@@ -43,7 +43,7 @@ impl StateData {
     /// - `show_settings` -> Setting this to false will omit displaying address that contains blockchain setting data. It is
     ///     recommended that this stay false as its serialization will often be different from the rest of the data.
     /// - `method` -> What method to use when deserializing data. See
-    ///     [supported methods](../../index.html#supported-deserialization-schemes) for a list of valid options
+    ///     [supported methods](../../index.html#supported-deserialization-methods) for a list of valid options
     pub fn display_full_data(self, (full_id, show_settings, method): (bool, bool, String)) {
         for state in self.data.iter() {
             if show_settings || state.get_address_namespace() != "000000" {
@@ -82,7 +82,7 @@ impl StateData {
     /// - `show_settings` -> Setting this to false will omit displaying address that contains blockchain setting data. It is
     ///     recommended that this stay false as its serialization will often be different from the rest of the data.
     /// - `method` -> What method to use when deserializing data. See
-    ///     [supported methods](../../index.html#supported-deserialization-schemes) for a list of valid options
+    ///     [supported methods](../../index.html#supported-deserialization-methods) for a list of valid options
     pub fn display_full_data_no_color(self, (full_id, show_settings, method): (bool, bool, String)) {
         for state in self.data.iter() {
             if show_settings || state.get_address_namespace() != "000000" {

@@ -1,10 +1,8 @@
 // Joseph Venetucci
 
-
-//! # json_deserialize
-//!
-//! `json_deserialize` is a collection of methods that help parse payload data stored in [Transaction](struct.Transaction.html)
-//! and [State]structures. The payload is originally serialized by a user chosen method, and then base64 encoded before its stored.
+//! `json_deserialize` is a collection of methods that help parse payload data stored in [Transaction](../json_structs/json_blocks/struct.Transaction.html)
+//! and [State](/json_structs/json_state/struct.State.html) structures.
+//! The payload is originally serialized by a user chosen method, and then base64 encoded before its stored.
 
 extern crate base64;
 extern crate serde_cbor;
