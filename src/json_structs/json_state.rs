@@ -54,9 +54,15 @@ impl StateData {
                 }
 
                 let payload_encoded = String::from(state.data.as_str());
-                match method.as_str() {
+
+                // If printing out the settings block, don't deserialize it
+                if show_settings && state.get_address_namespace() == "000000" {
+                    println!("\tData:\n{}", payload_encoded.blue())
+                } else {
+                    match method.as_str() {
                     "cbor" => println!("\tData:\n{}", parse_cbor(payload_encoded, 2).blue()),
                     _ => panic!("Unsupported deserialization method: {}", method)
+                    }
                 }
             }
         }
@@ -85,9 +91,15 @@ impl StateData {
                 }
 
                 let payload_encoded = String::from(state.data.as_str());
-                match method.as_str() {
+
+                // If printing out the settings block, don't deserialize it
+                if show_settings && state.get_address_namespace() == "000000" {
+                    println!("\tData:\n{}", payload_encoded)
+                } else {
+                    match method.as_str() {
                     "cbor" => println!("\tData:\n{}", parse_cbor(payload_encoded, 2)),
                     _ => panic!("Unsupported deserialization method: {}", method)
+                    }
                 }
             }
         }

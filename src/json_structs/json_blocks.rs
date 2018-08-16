@@ -95,9 +95,15 @@ impl BlockData {
 
                         // Deserialize the payload according to the passed in method
                         let payload_encoded = String::from(txn.payload.as_ref());
-                        match method.as_str() {
-                            "cbor" => println!("\t\t| Payload:\n{}", parse_cbor(payload_encoded, 3).blue()),
-                            _ => panic!("Unsupported deserialization method: {}", method)
+
+                        // If we are printing out the genesis block, don't deserialize the payload
+                        if show_genesis && block.header.block_num == "0" {
+                            println!("\t\t| Payload:\n{}", payload_encoded.blue())
+                        } else {
+                            match method.as_str() {
+                                "cbor" => println!("\t\t| Payload:\n{}", parse_cbor(payload_encoded, 3).blue()),
+                                _ => panic!("Unsupported deserialization method: {}", method)
+                            }
                         }
                     }
                 }
@@ -173,10 +179,16 @@ impl BlockData {
 
                         // Deserialize the payload according to the passed in method
                         let payload_encoded = String::from(txn.payload.as_ref());
-                        match method.as_str() {
-                            "cbor" => println!("\t\t| Payload:\n{}", parse_cbor(payload_encoded, 3)),
-                            _ => panic!("Unsupported deserialization method: {}", method)
-                        }
+
+                        // If we are printing out the genesis block, don't deserialize the payload
+                        if show_genesis && block.header.block_num == "0" {
+                            println!("\t\t| Payload:\n{}", payload_encoded)
+                        } else {
+                            match method.as_str() {
+                                "cbor" => println!("\t\t| Payload:\n{}", parse_cbor(payload_encoded, 3)),
+                                _ => panic!("Unsupported deserialization method: {}", method)
+                            }
+                        } 
                     }
                 }
                 // Display an arrow until we get to the last block
