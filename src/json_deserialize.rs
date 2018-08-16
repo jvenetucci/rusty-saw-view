@@ -68,6 +68,35 @@ pub fn parse_json(payload_in_base64: String, tab_padding: u8) -> String {
     decoded_payload
 }
 
+/// Parse data that was serialized with a method not originally supported by this application.
+/// 
+/// In the case that the data you want to parse is serialized with a custom or unsupported method,
+/// such as google protocol buffers, then you will have to impliment this method to handle it.
+/// Some of the code is already written for you, but commented out.
+/// 
+/// Returns a string that represents the deserialized object. The `tab_padding`
+/// arg specifies how many tabs should pad each line of the string.
+/// 
+/// # Panics
+/// This function panics if it's used and isn't implemented. 
+/// This function should panic if there are any decoding or deserialization errors.
+pub fn parse_custom(_payload_in_base64: String, _tab_padding: u8) -> String {
+
+    // Remove this once you've finished. Also remove the '_' infront of the args
+    unimplemented!();
+
+    // First the payload is Base64 Decoded.
+    // let bytes = base64::decode(payload_in_base64.as_str())
+    //     .expect("Error in trying to base64 decode payload:");
+
+    // Here you should parse the payload using your derserialization method
+
+    // Here you should work on generating a string that represents the deserialized data
+    // let mut decoded_payload = String::with_capacity(tab_padding as usize);
+    // decoded_payload
+}
+
+
 #[cfg(test)]
 mod test_cbor_decode {
     use super::*;
