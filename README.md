@@ -112,7 +112,7 @@ Out of the box the following deserialization methods are supported:
 - CBOR
 - JSON
 
-### Adding Unsupported Deserialization Methods
+#### Adding Unsupported Deserialization Methods
 Since Sawtooth is modular by design, it allows developers to use whatever serialization scheme they want. This made the development of this application difficult because it can't possibly support every scheme out of the box. For methods not listed in the previous section, users will have to add it to a section of the project in order to use it.
 
 Located in `src/json_deserialize.rs` is a method called `parse_custom()`. Users will need to impliment this method. For more information on this step, see the rustdoc comments that annotate the method. Once this is done you should be able to run the program with `custom` as the method.
