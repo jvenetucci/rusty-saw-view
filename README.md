@@ -164,6 +164,37 @@ Running that command on the state data will show the address where the settings 
 Now that you've parsed and displayed data from files check out the next section which will show you how to grab data from a sawtooth node via a URL. You'll even get to interact with a live instance of a IntKey processor!
 
 #### Data From Endpoints
+This application can also pull data from live, running sawtooth nodes. In this section you'll learn how to use the `url` command for pulling data from a node instead of a file. This section requires that you have [Docker](https://www.docker.com) and [Docker Compose](https://docs.docker.com/compose/install/) installed.
+
+Using docker-compose and a sawtooth configuration file (courtesy of Intel) you'll run your own sawtooth node locally that has an IntKey transaction processor. The configuration file is at `blockchain-examples/docker-compose.yaml`. Run the following in the root of the project directory:
+```bash
+cd example-blockchain/
+docker-compose -f docker-compose.yaml up
+```
+
+After pulling some images you should have a Sawtooth node setup that runs a IntKey transaction processor and exposes a REST-API at port `8008`. Visit `http://localhost:8008/blocks` and `http://localhost:8008/state` in a browser to confirm this.
+
+Your next step is to run some IntKey commands. Open up a new terminal and run the following: `docker exec -it sawtooth-shell-default bash`. Doing this logs you into the Docker container running the IntKey processor. From here you can run IntKey commands. Lets set a variable called *x* to 100 with the following:
+```bash
+intkey set x 100 --url http://rest-api:8008
+```
+
+How do we know if it worked? Lets check it using `rusty-saw-view`. Run the following to query the current state:
+```bash
+cargo run -- state cbor url http://localhost:8008/state
+```
+
+You should see that there is one address containing the newly created variable *x*. Now lets decrement it by 20 with `intkey dec x 20 --url http://rest-api:8008`. Running the program again for state data you should see the value of *x* being 80. Take this moment to also view the blocks in the chain:
+```bash
+cargo run -- blocks cbor url http://localhost:8008/blocks
+```
+
+You should see two blocks: one setting *x* to 100 and the other decrementing it by 20.
+
+Now you know how to grab data from a live sawtooth node. In order to shutdown and stop the containers first close the IntKey terminal by using the `exit` command. Then go back to the original terminal window in which you ran `docker-compose`. Use `CTRL-C` to stop the terminal, then enter in the following to stop and remove the docker containers:
+```bash
+docker-compose -f docker-compose.yaml down
+```
 
 ---
 
