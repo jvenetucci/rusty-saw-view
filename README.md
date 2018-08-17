@@ -7,27 +7,27 @@ From my own experience, Sawtooth is great for including a blockchain based distr
 
 rusty-saw-view attempts to solve this problem by contacting the HTTP endpoints of a Sawtooth node and requesting the JSON data. It's job is to parse and visually display this data in a way thats easy to understand and explain.
 
-[Rustdocs](#Building-The-Rustdocs) | [Usage](#Usage) | [Usage Guide](#Usage-Guide)
+[Rustdocs](https://github.com/jvenetucci/rusty-saw-view#building-the-rustdocs) | [Usage](https://github.com/jvenetucci/rusty-saw-view#usage) | [Usage Guide](https://github.com/jvenetucci/rusty-saw-viewhttps://github.com/jvenetucci/rusty-saw-view#usage-guide)
 
 ---
 
 ## Table of Contents
-- [Features & Requirements](#Features-&-Requirements)
-- [Project Structure](#Project-&-Directory-Structure)
-- [How to Build](#How-to-Build)
-  - [Building The Application](#Building-The-Application)
-  - [Teardown & Cleanup](#Teardown-&-Cleanup)
-  - [Building The Rustdocs](#Building-The-Rustdocs)
-- [Usage](#Usage)
-  - [CLI Options](#CLI-Options)
-    - [Supported Deserialization Methods](#Supported-Deserialization-Methods)
-    - [Custom Deserialization Methods](#Adding-Unsupported-Deserialization-Methods)
-  - [Usage Guide](#Usage-Guide)
-- [Testing Tools](#Testing-Tools)
-- [Licensing](#Licensing)
-- [Authors](#Authors)
-- [Acknowledgments](#Acknowledgments)
-- [References](#References)
+- [Features & Requirements](https://github.com/jvenetucci/rusty-saw-view#features--requirements)
+- [Project Structure](https://github.com/jvenetucci/rusty-saw-view#project--directory-structure)
+- [How to Build](https://github.com/jvenetucci/rusty-saw-view#how-to-build)
+  - [Building The Application](https://github.com/jvenetucci/rusty-saw-view#building-the-application)
+  - [Teardown & Cleanup](https://github.com/jvenetucci/rusty-saw-view#teardown--cleanup)
+  - [Building The Rustdocs](https://github.com/jvenetucci/rusty-saw-view#building-the-rustdocs)
+- [Usage](https://github.com/jvenetucci/rusty-saw-view#usage)
+  - [CLI Options](https://github.com/jvenetucci/rusty-saw-viewhttps://github.com/jvenetucci/rusty-saw-view#cli-options)
+    - [Supported Deserialization Methods](https://github.com/jvenetucci/rusty-saw-view#supported-deserialization-methods)
+    - [Custom Deserialization Methods](https://github.com/jvenetucci/rusty-saw-view#adding-unsupported-deserialization-methods)
+  - [Usage Guide](https://github.com/jvenetucci/rusty-saw-viewhttps://github.com/jvenetucci/rusty-saw-view#usage-guide)
+- [Testing Tools](https://github.com/jvenetucci/rusty-saw-view#testing-tools)
+- [Licensing](https://github.com/jvenetucci/rusty-saw-view#licensing)
+- [Authors](https://github.com/jvenetucci/rusty-saw-view#authors)
+- [Acknowledgments](https://github.com/jvenetucci/rusty-saw-view#acknowledgments)
+- [References](https://github.com/jvenetucci/rusty-saw-view#references)
 
 ---
 
@@ -38,7 +38,7 @@ rusty-saw-view attempts to solve this problem by contacting the HTTP endpoints o
     - [X] CBOR.
     - [X] Javascript.
     - [X] BASE64.
-    - [X] [Support for advanced and custom protocols like Google Protobuf.](#Adding-Unsupported-Deserialization-Methods)
+    - [X] [Support for advanced and custom protocols like Google Protobuf.](https://github.com/jvenetucci/rusty-saw-view#adding-unsupported-deserialization-methods)
 - [X] Display parsed data through the command line in text format.
     - [X] Formatted & Colored output to terminal.
     - [X] Formatted output for piping to file.
@@ -51,8 +51,8 @@ rusty-saw-view attempts to solve this problem by contacting the HTTP endpoints o
 The root directory of the project contains the following folders:
 - **src** -- Contains code for the application.
   - The files in here are further broken into modules. For information on individual modules see
-    [Building RustDocs](#Building-The-Rustdocs)
-- **example-blockchain** -- Contains example JSON data for a simple Sawtooth blockchain; See [Usage Guide](#Usage-Guide).
+    [Building RustDocs](https://github.com/jvenetucci/rusty-saw-view#building-the-rustdocs)
+- **example-blockchain** -- Contains example JSON data for a simple Sawtooth blockchain; See [Usage Guide](https://github.com/jvenetucci/rusty-saw-viewhttps://github.com/jvenetucci/rusty-saw-view#usage-guide).
 <!-- - **test** -- Integration test for the application. -->
 - **Cargo.toml** -- Contains metadata & the dependices of the application
 
@@ -60,7 +60,7 @@ The root directory of the project contains the following folders:
 
 ## How to Build
 This section will provide an overview of how to build the application. Rustc and [Cargo](https://doc.rust-lang.org/stable/cargo/) are required. Once the application has been built, see
-the [Usage Guide](#Usage-Guide) on how to use it.
+the [Usage Guide](https://github.com/jvenetucci/rusty-saw-viewhttps://github.com/jvenetucci/rusty-saw-view#usage-guide) on how to use it.
 
 ### Building The Application
 Navigate to the root of the project directory and run the following:
@@ -84,10 +84,10 @@ $ cargo doc --open --no-deps
 ---
 
 ## Usage
-In this section you'll learn how to use the application by invoking it through the command line. For information on how this is done, see the subsection [CLI Options](#CLI-Options). If you want to try out the program but don't have access to a running instance of a sawtooth application, see the [Usage Guide](#Usage-Guide) section. There you'll use provided blockchain data to play with the application.
+In this section you'll learn how to use the application by invoking it through the command line. For information on how this is done, see the subsection [CLI Options](https://github.com/jvenetucci/rusty-saw-view#cli-options). If you want to try out the program but don't have access to a running instance of a sawtooth application, see the [Usage Guide](https://github.com/jvenetucci/rusty-saw-view#usage-guide) section. There you'll use provided blockchain data to play with the application.
 
 ### CLI Options
-After building the project you can run it using `cargo run`. Running the command `cargo run -- ---help` will display instructions on how to use the program. If you want concrete examples on how to invoke it, see the [Usage Guide](#Usage-Guide).
+After building the project you can run it using `cargo run`. Running the command `cargo run -- ---help` will display instructions on how to use the program. If you want concrete examples on how to invoke it, see the [Usage Guide](https://github.com/jvenetucci/rusty-saw-view#usage-guide).
 
 ```bash
 USAGE:
@@ -118,7 +118,7 @@ Since Sawtooth is modular by design, it allows developers to use whatever serial
 Located in `src/json_deserialize.rs` is a method called `parse_custom()`. Users will need to impliment this method. For more information on this step, see the rustdoc comments that annotate the method. Once this is done you should be able to run the program with `custom` as the method.
 
 ### Usage Guide
-This section will walk you through using the application by invoking it through the command line. If you want to try out the program but don't have immediate access to JSON blockchain data, then you can use the provided resources in the `/example-blockchain` directory. You'll be able to parse and view blockchain data from the `/state` and `/blocks` endpoint. This section covers pulling data from [files](#Data-From-Files) and [HTTP Endpoints](#Data-From-Endpoints).
+This section will walk you through using the application by invoking it through the command line. If you want to try out the program but don't have immediate access to JSON blockchain data, then you can use the provided resources in the `/example-blockchain` directory. You'll be able to parse and view blockchain data from the `/state` and `/blocks` endpoint. This section covers pulling data from [files](https://github.com/jvenetucci/rusty-saw-view#data-from-files) and [HTTP Endpoints](https://github.com/jvenetucci/rusty-saw-view#data-from-endpoints).
 
 #### Data From Files
 Inside of `/example-blockchain` are two files: `blocks.json` and `state.json` that represent the data from the `/blocks` and `/state` endpoints of a sawtooth node. The particular node was running an instance of the [IntKey](https://sawtooth.hyperledger.org/docs/core/releases/1.0/transaction_family_specifications/integerkey_transaction_family.html) transaction processor. The idea behind it is that it lets you set integer values to variables, and then either increment or decrement them by any integer value. The json files were gathered after five commands had been run. The sequence of commands and current state is explained in `example-blockchain/README.md`.
@@ -198,9 +198,9 @@ I used a few crates created by others as part of this project. The full list of 
 ---
 
 ## References
-- [GitHub](https://github.com/jvenetucci/lace)
+- [GitHub Repo](https://github.com/jvenetucci/lace)
 - [Hyperledger Sawtooth Docs](https://sawtooth.hyperledger.org/docs/core/releases/1.0/introduction.html)
-  -[Sawtooth REST API](https://sawtooth.hyperledger.org/docs/core/releases/1.0/rest_api.html)
+  - [Sawtooth REST API](https://sawtooth.hyperledger.org/docs/core/releases/1.0/rest_api.html)
 - [Rustdocs for this application](#Building-The-Rustdocs)
 
 ---
