@@ -1,3 +1,8 @@
+// Copyright (c) 2018 Joseph Venetucci
+// [This program is licensed under the "MIT License"]
+// Please see the file LICENSE.md in the
+// source distribution of this software for license terms.
+
 //! `rusty-saw-view` is a Rust program that helps visualize blockchain data from 
 //! [Hyperledger Sawtooth](https://www.hyperledger.org/projects/sawtooth). Sawtooth is a blockchain framework that 
 //! provides a REST API to query information such as the current state of the ledger, individual blocks and

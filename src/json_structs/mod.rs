@@ -1,3 +1,8 @@
+// Copyright (c) 2018 Joseph Venetucci
+// [This program is licensed under the "MIT License"]
+// Please see the file LICENSE.md in the
+// source distribution of this software for license terms.
+
 //! `json_structs` is a collection of submodules that define structures that map to the JSON
 //! data found at various endpoints for Hyperledger Sawtooth.
 //! 

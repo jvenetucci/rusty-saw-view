@@ -1,4 +1,7 @@
-// Joseph Venetucci
+// Copyright (c) 2018 Joseph Venetucci
+// [This program is licensed under the "MIT License"]
+// Please see the file LICENSE.md in the
+// source distribution of this software for license terms.
 
 //! `json_deserialize` is a collection of methods that help parse payload data stored in [Transaction](../json_structs/json_blocks/struct.Transaction.html)
 //! and [State](/json_structs/json_state/struct.State.html) structures.
