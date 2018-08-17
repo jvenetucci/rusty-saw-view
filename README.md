@@ -12,7 +12,7 @@ rusty-saw-view attempts to solve this problem by contacting the HTTP endpoints o
 ---
 
 ## Table of Contents
-- [Features & Requirements](#Features-&-Requirements)
+- [Features & Requirements](https://github.com/jvenetucci/rusty-saw-view#features--requirements)
 - [Project Structure](#Project-&-Directory-Structure)
 - [How to Build](#How-to-Build)
   - [Building The Application](#Building-The-Application)
