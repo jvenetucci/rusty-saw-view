@@ -39,7 +39,11 @@
 //! - CBOR
 //! - JSON
 //! 
-//! If you want to use a custom method or one not supported see the [parse_custom()](json_deserialize/fn.parse_custom.html) method
+//! Since Sawtooth is modular by design, it allows developers to use whatever serialization scheme they want.
+//! This made the development of this application difficult because it can't possibly support every scheme
+//! out of the box. For methods not listed in the previous section, users will have to add it to a section of
+//! the project in order to use it. If you want to use a custom method or one not supported
+//! see the [parse_custom()](json_deserialize/fn.parse_custom.html) method
 //! 
 //! ## Additional Info
 //! For details on how to use this crate, see the README located at the projects [Github page](https://github.com/jvenetucci/rusty-saw-view)
