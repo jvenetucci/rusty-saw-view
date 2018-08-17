@@ -1,6 +1,0 @@
-0 - genesis
-1- create num1 and set to 2 
-2- create num2 and set to 2
-3- add 10 to num2
-4 - add 1 to num1
-5 - dec 2 to num1
