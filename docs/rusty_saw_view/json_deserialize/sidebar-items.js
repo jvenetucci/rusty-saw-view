@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["parse_cbor","Parse data that was serialized with CBOR."],["parse_custom","Parse data that was serialized with a method not originally supported by this application."],["parse_json","Parse data that was serialized with JSON."]]});

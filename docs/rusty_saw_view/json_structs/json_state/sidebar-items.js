@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["State","A structure that represents a state found at the `/state` endpoint. States contain an address and the data stored at that address"],["StateData","A structure that represents the root data item found at the `/state` endpoint."]]});
